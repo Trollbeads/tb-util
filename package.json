@@ -1,0 +1,19 @@
+{
+  "name": "tb-util",
+  "version": "1.0.0",
+  "description": "Trollbeads Util",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Trollbeads/tb-util.git"
+  },
+  "author": "trollbeads",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Trollbeads/tb-util/issues"
+  },
+  "homepage": "https://github.com/Trollbeads/tb-util#readme"
+}
