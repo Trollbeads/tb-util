@@ -1,0 +1,8 @@
+<Query>
+  <Select languages='EN'>
+    <Feature id='Quantity' />
+    <Feature id='NavPimBomProductSelf' />
+    <Feature id='NavPimComponentSelf' />
+  </Select>
+  <From id ='BillofMaterial'/>
+</Query>

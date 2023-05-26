@@ -18,5 +18,11 @@
   "homepage": "https://github.com/Trollbeads/tb-util#readme",
   "publishConfig": {
     "@trollbeads:registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "soap": "^1.0.0",
+    "underscore": "^1.13.6",
+    "xml2js": "^0.6.0"
   }
 }

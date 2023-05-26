@@ -1,0 +1,27 @@
+<Query>
+    <Select languages="EN">
+      <Feature id="SKU" />
+      <Feature id="name" />
+    </Select>
+    <From id ="Product" />
+    <Where>
+        <Clause id='isBom' operator='!=' value='true' />
+        <Clause id="ItemGroup" operator="!=" value="AT Products" />
+        <Clause id="ItemGroup" operator="!=" value="CH Products" />
+        <Clause id="ItemGroup" operator="!=" value="CN Products" />
+        <Clause id="ItemGroup" operator="!=" value="DE Products" />
+        <Clause id="ItemGroup" operator="!=" value="IT Products" />
+        <Clause id="ItemGroup" operator="!=" value="JP Products" />
+        <Clause id="ItemGroup" operator="!=" value="LT Products" />
+        <Clause id="ItemGroup" operator="!=" value="TOGO Test" />
+        <Clause id="ItemGroup" operator="!=" value="ZA Products" />
+        <Clause id="SKU" operator="HAS" />
+        <Sub>
+            <Clause id="Productlifecycle" operator="=" value="03 Released to Distributors" />
+            <OR/>
+            <Clause id="VariantGroupSKU" operator="HAS" />
+            <Clause id="Productlifecycle" operator="!=" value="02 Availble for HQ" />
+            <Clause id="Productlifecycle" operator="!=" value="01 Idea / Concept" />
+        </Sub>
+    </Where>
+</Query>

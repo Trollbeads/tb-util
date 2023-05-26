@@ -1,0 +1,20 @@
+<Query>
+	<Select languages="{{language}}">
+		<Feature id="name" />
+		<Feature id="Description" />
+		<Feature id="SKU" />
+    <Feature id="VariantGroupName" />
+		<Feature id="PriceEURRetail" />
+		<Feature id="PriceEURWholesale" />
+		<Feature id="PriceDKKRetail" />
+		<Feature id="PriceDKKWholesale" />				
+		<Feature id="PriceSEKRetail" />
+		<Feature id="PriceSEKWholesale" />				
+	</Select>
+	<From id ="Product" />
+	<Where>
+		<Clause id="SKU" operator="IN">	
+		{{sku}}
+		</Clause>	
+	</Where>
+</Query>

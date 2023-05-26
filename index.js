@@ -1,5 +1,2 @@
-function connectionTest(){
-    return 'connected to tb-util'
-}
-
-console.log(connectionTest());
+exports.perfion = require('./perfion')
+exports.locale = require('./locale')

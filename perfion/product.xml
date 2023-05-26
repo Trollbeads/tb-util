@@ -1,0 +1,21 @@
+<Query>
+    <Select languages='{{language}}'>
+        <Feature id='**' />
+    </Select>
+    <From id ='Product'/>
+    <Where>
+        <Sub>
+            <Clause id='SKU' operator='HAS' />
+            <Clause id='Productlifecycle' operator='=' value='03 Released to Distributors' />
+            <OR/>
+            <Clause id='VariantGroupSKU' operator='HAS' />
+            <Clause id='SKU' operator='NOT HAS' />
+            <Clause id='Productlifecycle' operator='!=' value='02 Availble for HQ' />
+            <Clause id='Productlifecycle' operator='!=' value='01 Idea / Concept' />
+            <OR/>
+            <Clause id='SKU' operator='=' value='TNOBO-00002' />
+            <OR/>
+            <Clause id='SKU' operator='=' value='TNOBO-00003' />
+        </Sub>
+    </Where>
+</Query>

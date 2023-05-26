@@ -1,0 +1,8 @@
+<Query>
+	<Select languages='{{language}}'>
+		<Feature id='**' />
+	</Select>
+	<From id ='{{feature}}'/>
+	<Where>
+	</Where>
+</Query>

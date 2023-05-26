@@ -1,0 +1,11 @@
+<Query>
+    <Select languages='{{language}}'>
+        <Feature id='**' />
+    </Select>
+    <From id ='Product'/>
+    <Where>
+        <Sub>
+            <Clause id='SKU' operator='=' value='TGLBE-30022' />
+        </Sub>
+    </Where>
+</Query>

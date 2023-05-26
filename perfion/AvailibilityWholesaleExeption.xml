@@ -1,0 +1,8 @@
+<Query>
+  <Select languages='EN'>
+    <Feature id='**' />
+  </Select>
+  <From id ='AvailibilityWholesaleExeption'/>
+  <Where>
+  </Where>
+</Query>

@@ -1,0 +1,62 @@
+<Query>
+    <Select languages='{{language}}'>
+        <Feature id='SKU' />
+        <Feature id='Description' />
+        <Feature id='Length' />
+        <Feature id='Circumference' />
+        <Feature id='BangleSize' />
+        <Feature id='TotalWeight' />
+        <Feature id='Mainmaterial' />
+        <Feature id='Brandname' />
+        <Feature id='Additionalmaterial' />
+        <Feature id='Itemgroup' />
+        <Feature id='Retired' />
+        <Feature id='YearOfCollection' />
+        <Feature id='VariantGroupSKU' />
+        <Feature id='GTIN1' />
+        <Feature id='PriceGroup' />
+        <Feature id='Designer' />
+        <Feature id='Image' />
+        <Feature id='AdditionalImages' />
+        <Feature id='AvailiblityDateRetailStart' />
+        <Feature id='AvailiblityDateRetailEnd' />
+        <Feature id='priceGBPRetail' /> 
+        <Feature id='priceEURRetail' />                 
+        <Feature id='priceUSDRetail' /> 
+        <Feature id='priceDKKRetail' />
+        <Feature id='Color' />
+        <Feature id='Productguides' />
+
+    </Select>
+
+    <From id ='Product'/>
+
+    <Where>
+        <sub>
+        <Clause id='SKU' operator='HAS' /><OR/>
+        <Clause id='VariantGroupSKU' operator='HAS' />
+        </sub>
+
+        <Clause id='BrandName' operator='!=' value='X Jewellery' />
+        <Clause id='Productlifecycle' operator='=' value='03 Released to Distributors' />
+        <Clause id='MainMaterial' operator='!=' value='Various Materials' />
+
+        <!-- <Clause id='Retired' operator='!=' value='True' />              -->
+
+        <Clause id='AvailiblityDateRetailEnd' operator='>' value='@@DATENOW' />
+
+        <Clause id='MainMaterial' operator='!=' value='Gold' /> 
+        <Clause id='MainMaterial' operator='!=' value='Gold 14kt' />
+        <Clause id='MainMaterial' operator='!=' value='Gold 18kt' />
+        <Clause id='MainMaterial' operator='!=' value='Gold 22kt' />       
+
+        <Clause id='ItemGroup' operator='!=' value='Box' />
+        <Clause id='ItemGroup' operator='!=' value='Display' />
+        <Clause id='ItemGroup' operator='!=' value='Furniture' />
+        <Clause id='ItemGroup' operator='!=' value='Semi Finished Item' />
+        <Clause id='ItemGroup' operator='!=' value='Service item' />
+        <Clause id='ItemGroup' operator='!=' value='BOM Beads' />
+        <Clause id='ItemGroup' operator='!=' value='BOM Ring' />
+        <Clause id='ItemGroup' operator='!=' value='BOM POS' />
+    </Where>
+</Query>

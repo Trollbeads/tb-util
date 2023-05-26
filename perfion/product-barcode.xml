@@ -1,0 +1,21 @@
+<Query>
+	<Select languages='{{language}}'>
+		<Feature id='SKU' />
+		<Feature id='OriginalItemNumber' />
+		<Feature id='id' />
+        <Feature id='Value' />
+        <Feature id='GTIN1' />
+        <Feature id='GTIN10' />
+        <Feature id='GTIN50' />
+        <Feature id='BrandName' />
+		<Feature id='Image' />
+        <Feature id='Circumference' />
+	</Select>
+	<From id ='Product'/>
+	<Where>
+        <Sub>
+            <Clause id='SKU' operator='HAS' />
+            <Clause id='Productlifecycle' operator='!=' value='01 Idea / Concept' />
+        </Sub>		
+	</Where>
+</Query> 

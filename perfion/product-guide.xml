@@ -1,0 +1,9 @@
+<Query>
+    <Select languages='{{language}}'>
+        <Feature id='ProductGuideImageID' />
+        <Feature id='ProductGuideKeys' />
+    </Select>
+    <From id ='ProductGuides'/>
+    <Where>
+    </Where>
+</Query>

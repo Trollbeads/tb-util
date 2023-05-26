@@ -1,0 +1,19 @@
+<Query>
+	<Select languages='{{language}}'>
+		<Feature id='SKU' />
+		<Feature id='Value' />
+        <Feature id='ItemGroup' />
+        <Feature id='MainMaterial' />
+        <Feature id='AdditionalMaterial' />
+        <Feature id='TotalWeight' />
+        <Feature id='WeightMainMaterial' />
+        <Feature id='WeightAdditionalMaterial' />
+        <Feature id='CustomsTariff' />
+        <Feature id='Carat' />
+
+	</Select>
+	<From id ='Product'/>
+	<Where>
+		
+	</Where>
+</Query> 

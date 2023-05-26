@@ -1,0 +1,40 @@
+<Query>
+	<Select languages="{{language}}">
+		<Feature id="name" />
+		<Feature id="Description" />
+		<Feature id="SKU" />
+    <Feature id="VariantGroupName" />
+		<Feature id="PriceEURRetail" />
+		<Feature id="PriceEURWholesale" />		
+		<Feature id="Price{{currency}}Retail" />
+		<Feature id="Price{{currency}}Wholesale" />				
+	</Select>
+	<From id ="Product" />
+	<Where>
+		<Clause id="brandName" operator="!=" value="X Jewellery" />	
+		<Clause id="ItemGroup" operator="!=" value="Furniture" />	
+		<Clause id="ItemGroup" operator="!=" value="Display" />		
+		<Clause id="ItemGroup" operator="!=" value="Semi Finished Item" />		
+		<Clause id="ItemGroup" operator="!=" value="Service item" />	
+		<Clause id="ItemGroup" operator="!=" value="Box" />	
+		<Clause id="ItemGroup" operator="!=" value="BOM POS" />	
+		<Clause id="ExludeFromTranslation" operator="!=" value="true" />
+		<Sub>
+			<Clause id="brand" operator="=" value="normal" />
+			<Clause id="MainMaterial" operator="!=" value="Various Materials" />
+			<Clause id="SKU" operator="HAS" />
+			<Clause id="Productlifecycle" operator="=" value="03 Released to Distributors" />
+			<OR/>
+			<Clause id="brand" operator="=" value="virtual" />
+			<Clause id="MainMaterial" operator="!=" value="Various Materials" />
+			<Clause id="VariantGroupSKU" operator="HAS" />
+			<Clause id="Productlifecycle" operator="!=" value="02 Availble for HQ" />
+			<Clause id="Productlifecycle" operator="!=" value="01 Idea / Concept" />
+		</Sub>
+		<Sub>
+			<Clause id="Description({{language_filter}})" operator="NOT HAS" />
+			<OR/>
+			<Clause id="String({{language_filter}})" operator="NOT HAS" />
+		</Sub>
+	</Where>
+</Query>

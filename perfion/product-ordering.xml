@@ -1,0 +1,13 @@
+<Query>
+  <Select languages='EN'>
+    <Feature id='SKU'/>
+    <Feature id='Retired'/>
+    <Feature id='Collection'/>
+    <Feature id='YearOfCollection'/>
+  </Select>
+  <From id ='Product'/>
+  <Where>
+    <Clause id='ItemGroup' operator='!=' value='Semi Finished Item' />
+    <Clause id='ItemGroup' operator='!=' value='Service Item' />
+  </Where>
+</Query>

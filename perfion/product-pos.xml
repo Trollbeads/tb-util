@@ -1,0 +1,51 @@
+<Query>
+    <Select languages="{{language}}">
+		<Feature id="Collection" />
+		<Feature id="Color" />
+        <Feature id="Description" />
+        <Feature id="Designer" />
+        <Feature id="GTIN1" />
+        <Feature id="Image" />
+        <Feature id="MainMaterial" />
+        <Feature id="PriceDKKRetail" />
+        <Feature id="PriceUSDRetail" />
+        <Feature id="Price10232EURRetail" />
+        <Feature id="PriceEURDistributor" />
+        <Feature id="SKU" />
+        <Feature id="YearOfCollection" />
+        <Feature id="name" />
+        <Feature id="AdditionalMaterials" />
+        <Feature id="AvailiblityDateWholesaleStart" />
+        <Feature id="Retired" />
+    </Select>
+    <From id ="Product" />
+    <Where>
+        <Sub>
+            <Clause id="ItemGroup" operator="!=" value="AT Products" />
+            <Clause id="ItemGroup" operator="!=" value="CH Products" />
+            <Clause id="ItemGroup" operator="!=" value="CN Products" />
+            <Clause id="ItemGroup" operator="!=" value="DE Products" />
+            <Clause id="ItemGroup" operator="!=" value="JP Products" />
+            <Clause id="ItemGroup" operator="!=" value="LT Products" />
+            <Clause id="ItemGroup" operator="!=" value="TOGO Test" />
+            <Clause id="ItemGroup" operator="!=" value="UK Products" />
+            <Clause id="ItemGroup" operator="!=" value="ZA Products" />
+            <Clause id="SKU" operator="HAS" />
+            <Clause id="Productlifecycle" operator="=" value="03 Released to Distributors" />
+            <OR/>
+            <Clause id="ItemGroup" operator="!=" value="AT Products" />
+            <Clause id="ItemGroup" operator="!=" value="CH Products" />
+            <Clause id="ItemGroup" operator="!=" value="CN Products" />
+            <Clause id="ItemGroup" operator="!=" value="DE Products" />
+            <Clause id="ItemGroup" operator="!=" value="JP Products" />
+            <Clause id="ItemGroup" operator="!=" value="LT Products" />
+            <Clause id="ItemGroup" operator="!=" value="TOGO Test" />
+            <Clause id="ItemGroup" operator="!=" value="UK Products" />
+            <Clause id="ItemGroup" operator="!=" value="ZA Products" />
+            <Clause id="VariantGroupSKU" operator="HAS" />
+            <Clause id="SKU" operator="HAS" />
+            <Clause id="Productlifecycle" operator="!=" value="02 Availble for HQ" />
+            <Clause id="Productlifecycle" operator="!=" value="01 Idea / Concept" />
+        </Sub>
+    </Where>
+</Query>
