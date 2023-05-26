@@ -1,8 +1,8 @@
 var fs = require('fs')
-  , locales = JSON.parse(fs.readFileSync('./locale/locale.json', 'utf8'))
-  , currencies = JSON.parse(fs.readFileSync('./locale/currencies.json', 'utf8'))
-  , countries = JSON.parse(fs.readFileSync('./locale/countries.json', 'utf8'))
-  , countryCodes = JSON.parse(fs.readFileSync('./locale/countryCodes.json', 'utf8'))
+, locales = JSON.parse(fs.readFileSync('./node_modules/tb-util/locale/locale.json', 'utf8'))
+, currencies = JSON.parse(fs.readFileSync('./node_modules/tb-util/locale/currencies.json', 'utf8'))
+, countries = JSON.parse(fs.readFileSync('./node_modules/tb-util/locale/countries.json', 'utf8'))
+, countryCodes = JSON.parse(fs.readFileSync('./node_modules/tb-util/locale/countryCodes.json', 'utf8'))
 
 exports.locales = locales
 exports.currencies = currencies

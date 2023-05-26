@@ -74,7 +74,7 @@ function convertXMLtoJSON(debug, xml, _callback) {
 }
 
 function fullFeature(id, languages, _callback) {
-    fs.readFile('./perfion/query.xml', 'utf8', function (err, query) {
+    fs.readFile('./node_modules/tb-util/perfion/query.xml', 'utf8', function (err, query) {
         query = query.replace('{{feature}}', id)
         query = query.replace('{{language}}', languages)
         executeQuery(query, _callback)
@@ -86,7 +86,7 @@ exports.executeQuery = function (query, _callback, format) {
 }
 
 exports.executeQueryFromFile = function (filename, _callback, format) {
-  fs.readFile('./perfion/' + filename + '.xml', 'utf8', function (err, query) {
+  fs.readFile('./node_modules/tb-util/perfion/' + filename + '.xml', 'utf8', function (err, query) {
     executeQuery(query, _callback, format)
   })
 }
@@ -100,7 +100,7 @@ exports.getImageById = function (image_uri, id, width, height) {
 }
 
 exports.productGuide = function (file, _callback) {
-    fs.readFile('./perfion/' + file, 'utf8', async function (err, query) { // product-guide.xml
+    fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', async function (err, query) { // product-guide.xml
         query = await query.replace('{{language}}', 'EN')
         executeQuery(query, async function (results) {
             result = await results
@@ -110,7 +110,7 @@ exports.productGuide = function (file, _callback) {
 }
 
 exports.productsBeforeFiltering = function (languages, file, _callback) {
-    fs.readFile('./perfion/' + file, 'utf8', async function (err, query) { // product-invoice.xml
+    fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', async function (err, query) { // product-invoice.xml
         query = await query.replace('{{language}}', languages)
         executeQuery(query, async function (results) {
             result = await results
@@ -120,7 +120,7 @@ exports.productsBeforeFiltering = function (languages, file, _callback) {
 }
 
 exports.product = function (languages, file, _callback, sku, language_filter) { //product.xml
-    fs.readFile('./perfion/' + file, 'utf8', function (err, query) {
+    fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', function (err, query) {
         query = query.replace('{{language}}', languages)
         query = query
             .replace('{{language_filter}}', language_filter)
@@ -261,7 +261,7 @@ exports.product = function (languages, file, _callback, sku, language_filter) { 
 
 
 exports.productTranslate = function (currency, languages, file, _callback, sku, language_filter) { //product.xml
-    fs.readFile('./perfion/' + file, 'utf8', function (err, query) {
+    fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', function (err, query) {
 
         if (currency) {
             query = query.replace('{{currency}}', currency)
@@ -400,7 +400,7 @@ exports.productTranslate = function (currency, languages, file, _callback, sku, 
 
 
 exports.product2 = function (languages, file, _callback) { //product.xml
-    fs.readFile('./perfion/' + file, 'utf8', function (err, query) {
+    fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', function (err, query) {
         query = query.replace('{{language}}', languages)
         executeQuery(query, async function (result) {
             var data = []
@@ -513,7 +513,7 @@ exports.product2 = function (languages, file, _callback) { //product.xml
 }
 
 exports.productForTbp = function (languages, file, _callback) { //product.xml
-    fs.readFile('./perfion/' + file, 'utf8', function (err, query) {
+    fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', function (err, query) {
         query = query.replace('{{language}}', languages)
         productsFromQuery(query, _callback)
     })
@@ -601,7 +601,7 @@ function productsFromQuery(query, _callback) {
 }
 
 exports.productForDW = function (languages, file, _callback) { //product-dw.xml
-    fs.readFile('./perfion/' + file, 'utf8', function (err, query) {
+    fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', function (err, query) {
         query = query.replace('{{language}}', 'EN')
         executeQuery(query, async function (result) {
             var data = []
@@ -666,7 +666,7 @@ function mapMultipleValues(entity) {
 }
 
 exports.productForAmazon = function (languages, file, _callback) { //amazon.xml
-    fs.readFile('./perfion/' + file, 'utf8', function (err, query) {
+    fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', function (err, query) {
         query = query.replace('{{language}}', languages)
         executeQuery(query, async function (result) {
             var data = []
