@@ -35,7 +35,7 @@ function executeQuery(debug, wsdl_uri, query, _callback, format) {
                     }
                     else {
                         setTimeout(() => {
-                            executeQuery(query, _callback)
+                            executeQuery(debug, wsdl_uri, query, _callback)
                         }, 30000)
                     }
                 })
@@ -48,7 +48,7 @@ function executeQuery(debug, wsdl_uri, query, _callback, format) {
                     _callback(result.ExecuteQueryResult)
                 }
                 else {
-                    convertXMLtoJSON(result.ExecuteQueryResult, _callback)
+                    convertXMLtoJSON(debug, result.ExecuteQueryResult, _callback)
                 }
             }
         })
@@ -73,21 +73,21 @@ function convertXMLtoJSON(debug, xml, _callback) {
     })
 }
 
-function fullFeature(id, languages, _callback) {
+function fullFeature(debug, wsdl_uri, id, languages, _callback) {
     fs.readFile('./node_modules/tb-util/perfion/query.xml', 'utf8', function (err, query) {
         query = query.replace('{{feature}}', id)
         query = query.replace('{{language}}', languages)
-        executeQuery(query, _callback)
+        executeQuery(debug, wsdl_uri, query, _callback, '')
     })
 }
 
-exports.executeQuery = function (query, _callback, format) {
-  executeQuery(query, _callback, format)
+exports.executeQuery = function (debug, wsdl_uri, query, _callback, format) {
+  executeQuery(debug, wsdl_uri, query, _callback, format)
 }
 
-exports.executeQueryFromFile = function (filename, _callback, format) {
+exports.executeQueryFromFile = function (debug, wsdl_uri, filename, _callback, format) {
   fs.readFile('./node_modules/tb-util/perfion/' + filename + '.xml', 'utf8', function (err, query) {
-    executeQuery(query, _callback, format)
+    executeQuery(debug, wsdl_uri, query, _callback, format)
   })
 }
 
@@ -99,27 +99,27 @@ exports.getImageById = function (image_uri, id, width, height) {
     return image_uri + '?id=' + id + '&size=' + (width ? width : 200) + 'x' + (height ? height : 200) + '&format=jpg'
 }
 
-exports.productGuide = function (file, _callback) {
+exports.productGuide = function (debug, wsdl_uri,file, _callback) {
     fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', async function (err, query) { // product-guide.xml
         query = await query.replace('{{language}}', 'EN')
-        executeQuery(query, async function (results) {
+        executeQuery(debug, wsdl_uri,query, async function (results) {
             result = await results
             _callback(result.Data.ProductGuides)
         })
     })
 }
 
-exports.productsBeforeFiltering = function (languages, file, _callback) {
+exports.productsBeforeFiltering = function (debug, wsdl_uri,languages, file, _callback) {
     fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', async function (err, query) { // product-invoice.xml
         query = await query.replace('{{language}}', languages)
-        executeQuery(query, async function (results) {
+        executeQuery(debug, wsdl_uri,query, async function (results) {
             result = await results
             _callback(result.Data.Product)
         })
     })
 }
 
-exports.product = function (languages, file, _callback, sku, language_filter) { //product.xml
+exports.product = function (debug, wsdl_uri,languages, file, _callback, sku, language_filter) { //product.xml
     fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', function (err, query) {
         query = query.replace('{{language}}', languages)
         query = query
@@ -128,7 +128,7 @@ exports.product = function (languages, file, _callback, sku, language_filter) { 
         if (sku) {
             query = query.replace('{{sku}}', sku)
         }
-        executeQuery(query, async function (result) {
+        executeQuery(debug, wsdl_uri,query, async function (result) {
             var data = []
             results = await result
 
@@ -260,7 +260,7 @@ exports.product = function (languages, file, _callback, sku, language_filter) { 
 
 
 
-exports.productTranslate = function (currency, languages, file, _callback, sku, language_filter) { //product.xml
+exports.productTranslate = function (debug, wsdl_uri,currency, languages, file, _callback, sku, language_filter) { //product.xml
     fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', function (err, query) {
 
         if (currency) {
@@ -273,7 +273,7 @@ exports.productTranslate = function (currency, languages, file, _callback, sku, 
         if (sku) {
             query = query.replace('{{sku}}', sku)
         }
-        executeQuery(query, async function (result) {
+        executeQuery(debug, wsdl_uri,query, async function (result) {
             var data = []
             results = await result
 
@@ -399,10 +399,10 @@ exports.productTranslate = function (currency, languages, file, _callback, sku, 
 }
 
 
-exports.product2 = function (languages, file, _callback) { //product.xml
+exports.product2 = function (debug, wsdl_uri,languages, file, _callback) { //product.xml
     fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', function (err, query) {
         query = query.replace('{{language}}', languages)
-        executeQuery(query, async function (result) {
+        executeQuery(debug, wsdl_uri,query, async function (result) {
             var data = []
             results = await result
 
@@ -512,19 +512,19 @@ exports.product2 = function (languages, file, _callback) { //product.xml
     })
 }
 
-exports.productForTbp = function (languages, file, _callback) { //product.xml
+exports.productForTbp = function (debug, wsdl_uri,languages, file, _callback) { //product.xml
     fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', function (err, query) {
         query = query.replace('{{language}}', languages)
-        productsFromQuery(query, _callback)
+        productsFromQuery(debug, wsdl_uri,query, _callback)
     })
 }
 
-exports.productsFromQuery = function (query, _callback) {
-    productsFromQuery(query, _callback)
+exports.productsFromQuery = function (debug, wsdl_uri,query, _callback) {
+    productsFromQuery(debug, wsdl_uri,query, _callback)
 }
 
-function productsFromQuery(query, _callback) {
-    executeQuery(query, async function (result) {
+function productsFromQuery(debug, wsdl_uri,query, _callback) {
+    executeQuery(debug, wsdl_uri,query, async function (result) {
         var data = []
         results = await result
 
@@ -600,10 +600,10 @@ function productsFromQuery(query, _callback) {
     })
 }
 
-exports.productForDW = function (languages, file, _callback) { //product-dw.xml
+exports.productForDW = function (debug, wsdl_uri,languages, file, _callback) { //product-dw.xml
     fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', function (err, query) {
         query = query.replace('{{language}}', 'EN')
-        executeQuery(query, async function (result) {
+        executeQuery(debug, wsdl_uri,query, async function (result) {
             var data = []
             results = await result
             // console.log(results.Data.Product[0])
@@ -665,10 +665,10 @@ function mapMultipleValues(entity) {
     return productAttribute
 }
 
-exports.productForAmazon = function (languages, file, _callback) { //amazon.xml
+exports.productForAmazon = function (debug, wsdl_uri,languages, file, _callback) { //amazon.xml
     fs.readFile('./node_modules/tb-util/perfion/' + file, 'utf8', function (err, query) {
         query = query.replace('{{language}}', languages)
-        executeQuery(query, async function (result) {
+        executeQuery(debug, wsdl_uri,query, async function (result) {
             var data = []
             results = await result
 
@@ -772,8 +772,8 @@ exports.productForAmazon = function (languages, file, _callback) { //amazon.xml
     })
 }
 
-exports.AvailibilityException = function (type, languages, _callback) {
-    fullFeature(type, languages, function (result) {
+exports.AvailibilityException = function (debug, wsdl_uri,type, languages, _callback) {
+    fullFeature(debug, wsdl_uri,type, languages, function (result) {
         console.log(result.Data.AvailibilityRetailExeption[0].Distributor[0])
         console.log(result.Data.AvailibilityRetailExeption[0].Product[0])
         var data = []
@@ -794,8 +794,8 @@ exports.AvailibilityException = function (type, languages, _callback) {
     })
 }
 
-exports.BangleSize = function (languages, _callback) {
-    fullFeature('BangleSize', languages, function (result) {
+exports.BangleSize = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'BangleSize', languages, function (result) {
         var data = []
 
         _.each(result.Data.BangleSize, function (entity) {
@@ -810,8 +810,8 @@ exports.BangleSize = function (languages, _callback) {
     })
 }
 
-exports.BaseUnitOfMeasure = function (languages, _callback) {
-    fullFeature('BaseUnitOfMeasure', languages, function (result) {
+exports.BaseUnitOfMeasure = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'BaseUnitOfMeasure', languages, function (result) {
         var data = []
 
         _.each(result.Data.BaseUnitOfMeasure, function (entity) {
@@ -826,8 +826,8 @@ exports.BaseUnitOfMeasure = function (languages, _callback) {
     })
 }
 
-exports.BillOfMaterial = function (languages, _callback) {
-    fullFeature('BillOfMaterial', languages, function (result) {
+exports.BillOfMaterial = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'BillOfMaterial', languages, function (result) {
         var data = []
 
         _.each(result.Data.BillOfMaterial, function (entity) {
@@ -850,8 +850,8 @@ exports.BillOfMaterial = function (languages, _callback) {
     })
 }
 
-exports.BrandName = function (languages, _callback) {
-    fullFeature('BrandName', languages, function (result) {
+exports.BrandName = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'BrandName', languages, function (result) {
         var data = []
 
         _.each(result.Data.BrandName, function (entity) {
@@ -867,8 +867,8 @@ exports.BrandName = function (languages, _callback) {
     })
 }
 
-exports.CategoryGroup = function (languages, _callback) {
-    fullFeature('CategoryGroup', languages, function (result) {
+exports.CategoryGroup = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'CategoryGroup', languages, function (result) {
         var data = []
 
         _.each(result.Data.Features[0].CategoryGroup[0], function (entity) {
@@ -893,8 +893,8 @@ exports.CategoryGroup = function (languages, _callback) {
     })
 }
 
-exports.Collection = function (languages, _callback) {
-    fullFeature('Collection', languages, function (result) {
+exports.Collection = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'Collection', languages, function (result) {
         var data = []
 
         _.each(result.Data.Collection, function (entity) {
@@ -910,8 +910,8 @@ exports.Collection = function (languages, _callback) {
     })
 }
 
-exports.Color = function (languages, _callback) {
-    fullFeature('Color', languages, function (result) {
+exports.Color = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'Color', languages, function (result) {
         var data = []
 
         _.each(result.Data.Color, function (entity) {
@@ -927,8 +927,8 @@ exports.Color = function (languages, _callback) {
     })
 }
 
-exports.AdditionalMaterial = function (languages, _callback) {
-    fullFeature('AdditionalMaterial', languages, function (result) {
+exports.AdditionalMaterial = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'AdditionalMaterial', languages, function (result) {
         var data = []
 
         _.each(result.Data.MainMaterial, function (entity) {
@@ -944,8 +944,8 @@ exports.AdditionalMaterial = function (languages, _callback) {
     })
 }
 
-exports.CountryOfOrigin = function (languages, _callback) {
-    fullFeature('CountryOfOrigin', languages, function (result) {
+exports.CountryOfOrigin = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'CountryOfOrigin', languages, function (result) {
         var data = []
 
         _.each(result.Data.CountryOfOrigin, function (entity) {
@@ -960,8 +960,8 @@ exports.CountryOfOrigin = function (languages, _callback) {
     })
 }
 
-exports.CustomsTariff = function (languages, _callback) {
-    fullFeature('CustomsTariff', languages, function (result) {
+exports.CustomsTariff = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'CustomsTariff', languages, function (result) {
         var data = []
         _.each(result.Data.CustomsTariff, function (entity) {
             data.push({
@@ -976,8 +976,8 @@ exports.CustomsTariff = function (languages, _callback) {
     })
 }
 
-exports.Designer = function (languages, _callback) {
-    fullFeature('Designer', languages, function (result) {
+exports.Designer = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'Designer', languages, function (result) {
         var data = []
 
         _.each(result.Data.Designer, function (entity) {
@@ -993,8 +993,8 @@ exports.Designer = function (languages, _callback) {
     })
 }
 
-exports.DiamondClarityName = function (languages, _callback) {
-    fullFeature('DiamondClarityName', languages, function (result) {
+exports.DiamondClarityName = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'DiamondClarityName', languages, function (result) {
         var data = []
 
         _.each(result.Data.DiamondClarityName, function (entity) {
@@ -1009,8 +1009,8 @@ exports.DiamondClarityName = function (languages, _callback) {
     })
 }
 
-exports.DiamondColor = function (languages, _callback) {
-    fullFeature('DiamondColor', languages, function (result) {
+exports.DiamondColor = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'DiamondColor', languages, function (result) {
         var data = []
 
         _.each(result.Data.DiamondColor, function (entity) {
@@ -1025,8 +1025,8 @@ exports.DiamondColor = function (languages, _callback) {
     })
 }
 
-exports.DiamondCut = function (languages, _callback) {
-    fullFeature('DiamondCut', languages, function (result) {
+exports.DiamondCut = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'DiamondCut', languages, function (result) {
         var data = []
 
         _.each(result.Data.DiamondCut, function (entity) {
@@ -1041,8 +1041,8 @@ exports.DiamondCut = function (languages, _callback) {
     })
 }
 
-exports.Distributor = function (languages, _callback) {
-    fullFeature('Distributor', languages, function (result) {
+exports.Distributor = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'Distributor', languages, function (result) {
         var data = []
 
         _.each(result.Data.Distributor, function (entity) {
@@ -1058,8 +1058,8 @@ exports.Distributor = function (languages, _callback) {
     })
 }
 
-exports.facetMaterial = function (languages, _callback) {
-    fullFeature('facetMaterial', languages, function (result) {
+exports.facetMaterial = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'facetMaterial', languages, function (result) {
         var data = []
 
         _.each(result.Data.FacetMaterial, function (facet) {
@@ -1074,8 +1074,8 @@ exports.facetMaterial = function (languages, _callback) {
     })
 }
 
-exports.ItemGroup = function (languages, _callback) {
-    fullFeature('ItemGroup', languages, function (result) {
+exports.ItemGroup = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'ItemGroup', languages, function (result) {
         var data = []
 
         _.each(result.Data.ItemGroup, function (entity) {
@@ -1091,8 +1091,8 @@ exports.ItemGroup = function (languages, _callback) {
     })
 }
 
-exports.Keyword = function (languages, _callback) {
-    fullFeature('Keyword', languages, function (result) {
+exports.Keyword = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'Keyword', languages, function (result) {
         var data = []
 
         _.each(result.Data.Keyword, function (entity) {
@@ -1107,8 +1107,8 @@ exports.Keyword = function (languages, _callback) {
     })
 }
 
-exports.MainMaterial = function (languages, _callback) {
-    fullFeature('MainMaterial', languages, function (result) {
+exports.MainMaterial = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'MainMaterial', languages, function (result) {
         var data = []
 
         _.each(result.Data.MainMaterial, function (entity) {
@@ -1125,8 +1125,8 @@ exports.MainMaterial = function (languages, _callback) {
     })
 }
 
-exports.Occasion = function (languages, _callback) {
-    fullFeature('Occasion', languages, function (result) {
+exports.Occasion = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'Occasion', languages, function (result) {
         var data = []
 
         _.each(result.Data.Occasion, function (entity) {
@@ -1141,8 +1141,8 @@ exports.Occasion = function (languages, _callback) {
     })
 }
 
-exports.PriceGroup = function (languages, _callback) {
-    fullFeature('PriceGroup', languages, function (result) {
+exports.PriceGroup = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'PriceGroup', languages, function (result) {
         var data = []
 
         _.each(result.Data.PriceGroup, function (entity) {
@@ -1156,8 +1156,8 @@ exports.PriceGroup = function (languages, _callback) {
         _callback(data)
     })
 }
-exports.Category = function (languages, _callback) {
-    fullFeature('Category', languages, function (result) {
+exports.Category = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'Category', languages, function (result) {
         var data = []
 
         _.each(result.Data.Category, function (entity) {
@@ -1172,8 +1172,8 @@ exports.Category = function (languages, _callback) {
     })
 }
 
-exports.ProductBannerCssClass = function (languages, _callback) {
-    fullFeature('ProductBannerCssClass', languages, function (result) {
+exports.ProductBannerCssClass = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'ProductBannerCssClass', languages, function (result) {
         var data = []
 
         _.each(result.Data.Features[0].ProductBannerCssClass, function (entity) {
@@ -1186,8 +1186,8 @@ exports.ProductBannerCssClass = function (languages, _callback) {
 }
 
 
-exports.ProductBannerText = function (languages, _callback) {
-    fullFeature('ProductBannerText', languages, function (result) {
+exports.ProductBannerText = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'ProductBannerText', languages, function (result) {
         var data = []
 
         _.each(result.Data.ProductBannerText, function (entity) {
@@ -1202,8 +1202,8 @@ exports.ProductBannerText = function (languages, _callback) {
     })
 }
 
-exports.ProductGuides = function (languages, _callback) {
-    fullFeature('ProductGuides', languages, function (result) {
+exports.ProductGuides = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'ProductGuides', languages, function (result) {
         var data = []
 
         _.each(result.Data.ProductGuides, function (entity) {
@@ -1220,8 +1220,8 @@ exports.ProductGuides = function (languages, _callback) {
     })
 }
 
-exports.ProductLanguage = function (languages, _callback) {
-    fullFeature('ProductLanguage', languages, function (result) {
+exports.ProductLanguage = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'ProductLanguage', languages, function (result) {
         var data = []
 
         _.each(result.Data.ProductLanguage, function (entity) {
@@ -1236,8 +1236,8 @@ exports.ProductLanguage = function (languages, _callback) {
     })
 }
 
-exports.ProductLifecycle = function (languages, _callback) {
-    fullFeature('ProductLifecycle', languages, function (result) {
+exports.ProductLifecycle = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'ProductLifecycle', languages, function (result) {
         var data = []
 
         _.each(result.Data.ProductLifecycle, function (entity) {
@@ -1252,8 +1252,8 @@ exports.ProductLifecycle = function (languages, _callback) {
     })
 }
 
-exports.RetailerGroup = function (languages, _callback) {
-    fullFeature('RetailerGroup', languages, function (result) {
+exports.RetailerGroup = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'RetailerGroup', languages, function (result) {
         var data = []
 
         _.each(result.Data.RetailerGroup, function (entity) {
@@ -1269,8 +1269,8 @@ exports.RetailerGroup = function (languages, _callback) {
 }
 
 
-exports.RetailerGroupName = function (languages, _callback) {
-    fullFeature('RetailerGroupName', languages, function (result) {
+exports.RetailerGroupName = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'RetailerGroupName', languages, function (result) {
         var data = []
 
         _.each(result.Data.RetailerGroupName, function (entity) {
@@ -1287,8 +1287,8 @@ exports.RetailerGroupName = function (languages, _callback) {
     })
 }
 
-exports.Royalties = function (languages, _callback) {
-    fullFeature('Royalties', languages, function (result) {
+exports.Royalties = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'Royalties', languages, function (result) {
         var data = []
 
         _.each(result.Data.Royalties, function (entity) {
@@ -1305,8 +1305,8 @@ exports.Royalties = function (languages, _callback) {
     })
 }
 
-exports.Theme = function (languages, _callback) {
-    fullFeature('Theme', languages, function (result) {
+exports.Theme = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'Theme', languages, function (result) {
         var data = []
 
         _.each(result.Data.Theme, function (entity) {
@@ -1321,8 +1321,8 @@ exports.Theme = function (languages, _callback) {
     })
 }
 
-exports.TrollbeadsComCategory = function (languages, _callback) {
-    fullFeature('TrollbeadsComCategory', languages, function (result) {
+exports.TrollbeadsComCategory = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'TrollbeadsComCategory', languages, function (result) {
         var data = []
 
         _.each(result.Data.TrollbeadsComCategory, function (entity) {
@@ -1337,8 +1337,8 @@ exports.TrollbeadsComCategory = function (languages, _callback) {
     })
 }
 
-exports.TrollbeadspartnerCategory = function (languages, _callback) {
-    fullFeature('TrollbeadspartnerCategory', languages, function (result) {
+exports.TrollbeadspartnerCategory = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'TrollbeadspartnerCategory', languages, function (result) {
         var data = []
 
         _.each(result.Data.TrollbeadspartnerCategory, function (entity) {
@@ -1356,8 +1356,8 @@ exports.TrollbeadspartnerCategory = function (languages, _callback) {
     })
 }
 
-exports.TrollbeadspartnerCategoryNote = function (languages, _callback) {
-    fullFeature('TrollbeadspartnerCategoryNote', languages, function (result) {
+exports.TrollbeadspartnerCategoryNote = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'TrollbeadspartnerCategoryNote', languages, function (result) {
         var data = []
 
         _.each(result.Data.TrollbeadspartnerCategoryNote, function (entity) {
@@ -1372,8 +1372,8 @@ exports.TrollbeadspartnerCategoryNote = function (languages, _callback) {
     })
 }
 
-exports.WarningText = function (languages, _callback) {
-    fullFeature('WarningText', languages, function (result) {
+exports.WarningText = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'WarningText', languages, function (result) {
         var data = []
 
         _.each(result.Data.WarningText, function (entity) {
@@ -1388,8 +1388,8 @@ exports.WarningText = function (languages, _callback) {
     })
 }
 
-exports.XJewelleryCategory = function (languages, _callback) {
-    fullFeature('XJewelleryCategory', languages, function (result) {
+exports.XJewelleryCategory = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'XJewelleryCategory', languages, function (result) {
         var data = []
 
         _.each(result.Data.Features, function (entity) {
@@ -1401,8 +1401,8 @@ exports.XJewelleryCategory = function (languages, _callback) {
     })
 }
 
-exports.YearOfCollection = function (languages, _callback) {
-    fullFeature('YearOfCollection', languages, function (result) {
+exports.YearOfCollection = function (debug, wsdl_uri,languages, _callback) {
+    fullFeature(debug, wsdl_uri,'YearOfCollection', languages, function (result) {
         var data = []
 
         _.each(result.Data.YearOfCollection, function (entity) {

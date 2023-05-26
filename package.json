@@ -1,6 +1,6 @@
 {
   "name": "tb-util",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Trollbeads Util",
   "main": "index.js",
   "scripts": {
