@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Trollbeads/tb-util/issues"
   },
-  "homepage": "https://github.com/Trollbeads/tb-util#readme"
+  "homepage": "https://github.com/Trollbeads/tb-util#readme",
+  "publishConfig": {
+    "@trollbeads:registry": "https://npm.pkg.github.com"
+  }
 }
