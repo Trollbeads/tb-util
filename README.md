@@ -1,2 +1,2 @@
 # tb-util
-Trollbeads Utility Library
+Utility Library

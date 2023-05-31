@@ -542,7 +542,7 @@ function productsFromQuery(debug, wsdl_uri,query, _callback) {
                         product.Name[language] = item._
                     })
                 }
-                else if (key == 'Category' || key == 'Color' || key == 'Keyword' || key == 'AdditionalMaterial') {
+                else if (key == 'AdditionalTrollbeadspartnerCategory' || key == 'TrollbeadspartnerCategory' || key == 'Category' || key == 'Color' || key == 'Keyword' || key == 'AdditionalMaterial') {
                     product[key] = {}
                     _.each(attribute, function (item) {
                         language = item['$'].language
